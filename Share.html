@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran - SAREI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .bg-dark-sarei { background-color: #333a41; }
+        .bg-toska-sarei { background-color: #20a8ba; }
+        .text-gold-sarei { color: #d4af37; }
+        /* Animasi muncul halus */
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="font-sans bg-toska-sarei min-h-screen">
+
+    <div class="bg-dark-sarei text-white text-center px-6 py-10">
+        <div class="flex justify-center mb-6">
+            <img src="https://sistem.sarei.id/img/pelaksana-SAREID.png" alt="Logo SAREI" class="h-28">
+        </div>
+
+        <h1 class="text-xl font-bold tracking-wider mb-2 uppercase">
+            Konfirmasi Pembayaran
+        </h1>
+       
+        <p class="text-[11px] leading-relaxed mb-6 font-medium text-gray-300">
+            BIMBINGAN TEKNIS BAGI PEMERINTAH DESA DAN BPD SE KOTA <br> SUNGAI PENUH
+        </p>
+
+        <h2 class="text-[13px] font-bold leading-snug mb-8 px-2 uppercase italic">
+            KONSOLIDASI, SINKRONISASI, DAN AKSELARASI PEMERINTAH <br>
+            DESA DAN BPD DALAM MENSUKSESKAN PROGRAM SUNGAI <br>
+            PENUH JUARA
+        </h2>
+
+        <div class="text-[12px] text-gray-300">
+            <p>Korem 042 Garuda Putih - Jambi</p>
+            <p>16 - 18 Desember 2025</p>
+        </div>
+    </div>
+
+    <div class="p-6">
+        <div class="max-w-md mx-auto mt-5">
+            <div class="flex shadow-2xl rounded-md overflow-hidden bg-white">
+                <input
+                    type="text"
+                    id="searchID"
+                    placeholder="Masukkan ID Peserta atau NIK"
+                    class="w-full py-4 px-5 text-sm focus:outline-none text-gray-600"
+                >
+                <button onclick="prosesCari()" class="bg-dark-sarei px-6 flex items-center justify-center hover:bg-black transition">
+                    <i class="fas fa-search text-white"></i>
+                </button>
+            </div>
+
+            <div id="cardBiodata" class="hidden mt-8 fade-in">
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+                    <div class="bg-gray-100 p-4 border-b flex items-center gap-4">
+                        <div class="w-12 h-12 bg-dark-sarei rounded-full flex items-center justify-center text-white">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3 id="resNama" class="font-bold text-gray-800">Nama Peserta</h3>
+                            <p id="resID" class="text-xs text-blue-600 font-mono">ID: 205429</p>
+                        </div>
+                    </div>
+                    <div class="p-5 space-y-3">
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold">Jabatan</p>
+                            <p id="resJabatan" class="text-sm text-gray-700">-</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase font-bold">Instansi</p>
+                            <p id="resInstansi" class="text-sm text-gray-700">-</p>
+                        </div>
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-bold text-xs mt-4 transition uppercase tracking-wider">
+                            Lanjut Konfirmasi Pembayaran
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMsg" class="hidden mt-10 text-center text-white bg-red-500/80 p-3 rounded-md text-sm font-bold fade-in">
+                ⚠️ ID Peserta atau NIK tidak ditemukan!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Contoh (Simulasi Database)
+        const dataPeserta = [
+            { id: "205429", nama: "BUDI SETIAWAN", jabatan: "KEPALA DESA", instansi: "DESA SUNGAI PENUH" },
+            { id: "205430", nama: "SITI NURHALIZA", jabatan: "ANGGOTA BPD", instansi: "DESA KOREM" },
+            { id: "123456", nama: "AHMAD ZAKY", jabatan: "SEKRETARIS", instansi: "PEMKOT JAMBI" }
+        ];
+
+        function prosesCari() {
+            const inputVal = document.getElementById('searchID').value;
+            const card = document.getElementById('cardBiodata');
+            const error = document.getElementById('errorMsg');
+
+            // Cari data yang cocok
+            const hasil = dataPeserta.find(p => p.id === inputVal);
+
+            if (hasil) {
+                // Masukkan data ke tampilan
+                document.getElementById('resNama').innerText = hasil.nama;
+                document.getElementById('resID').innerText = "ID: " + hasil.id;
+                document.getElementById('resJabatan').innerText = hasil.jabatan;
+                document.getElementById('resInstansi').innerText = hasil.instansi;
+
+                // Tampilkan kartu, sembunyikan error
+                card.classList.remove('hidden');
+                error.classList.add('hidden');
+            } else {
+                // Sembunyikan kartu, tampilkan error
+                card.classList.add('hidden');
+                error.classList.remove('hidden');
+            }
+        }
+    </script>
+
+</body>
+</html>
